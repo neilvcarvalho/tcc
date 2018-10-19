@@ -10,7 +10,11 @@ class Attempt < ApplicationRecord
   end
 
   def self.clusters
-    attempts = Attempt.all.map { |a| [a.id, a.answers.each_with_index.map { |an, i| [i, an] }.to_h ]}.to_h
+    attempts = Attempt.all.map do |attempt|
+      [attempt.id, attempt.answers.each_with_index.map do |answer, i|
+        [i, answer]
+      end.to_h ]
+    end.to_h
 
     result = Kmeans::Cluster.new(attempts, {
       :centroids => 3,
