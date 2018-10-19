@@ -22,14 +22,6 @@ class Attempt < ApplicationRecord
   end
 
   def cluster
-    my_cluster = nil
-
-    Attempt.clusters.each_with_index do |c, i|
-      if c.include?(id)
-        my_cluster = i
-      end
-    end
-
-    my_cluster
+    Attempt.clusters.index { |i| i.include?(id) }
   end
 end
