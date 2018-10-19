@@ -1,0 +1,32 @@
+<h1>Perguntas</h1>
+
+<%= form_tag poll_path do %>
+<ol>
+  <% @questions.each do |question| %>
+  <li>
+    <%= question.title %>
+    <ul>
+      <% question.answers.order(:order).each do |answer| %>
+        <% if question.single_answer? %>
+          <label>
+            <%= radio_button_tag "answers[#{question.id}][]", answer.value, nil, required: true %>
+            <%= answer.text %>
+          </label>
+          <br>
+        <% elsif question.multiple_answers? %>
+          <label>
+            <%= hidden_field_tag "answers[#{question.id}[#{answer.id}]", 0 %>
+            <%= check_box_tag "answers[#{question.id}][#{answer.id}]", answer.value %>
+            <%= answer.text %>
+          </label>
+          <br>
+        <% end %>
+      <% end %>
+    </ul>
+  </li>
+
+  <% end %>
+</ol>
+
+<%= submit_tag "Enviar" %>
+<% end %>
