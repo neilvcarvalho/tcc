@@ -7,7 +7,7 @@ module PollsHelper
     elsif cluster == 2
       "Conservador"
     else
-      "Muito Conversador"
+      "Muito Conservador"
     end
   end
 end
